@@ -43,7 +43,7 @@ namespace LiveSplit.ChangeCursor
 		private static object standart_arrow;
 		private static object standart_wait;
 
-		private const string factorio_cursor = "%SystemRoot%\\cursors\\cursorFactorio.cur";
+		private const string factorio_cursor = "%SystemRoot%\\cursors\\customCursor.cur";
 
 
 		public ChangeCursorComponent(LiveSplitState state)
