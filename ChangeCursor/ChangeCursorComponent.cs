@@ -3,9 +3,6 @@ using System;
 using LiveSplit.Model;
 using LiveSplit.UI;
 using System.Xml;
-using System.Threading;
-using System.IO;
-using System.Net.Sockets;
 using Microsoft.Win32;
 using System.Runtime.InteropServices;
 
@@ -13,18 +10,6 @@ namespace LiveSplit.ChangeCursor
 {
 	public class ChangeCursorComponent : LogicComponent
 	{
-		private LiveSplitState m_state = null;
-
-		private void OnStart(object sender, EventArgs e)
-		{
-			Console.WriteLine("start");
-		}
-
-		public void OnReset(object sender, TimerPhase value)
-		{
-			Console.WriteLine("reset");
-		}
-
 		#region LogicComponent Implementation
 		public override string ComponentName => ChangeCursorFactory.s_componentName;
 
@@ -47,12 +32,7 @@ namespace LiveSplit.ChangeCursor
 
 
 		public ChangeCursorComponent(LiveSplitState state)
-		{
-			m_state = state;
-			m_state.OnStart += OnStart;
-			m_state.OnReset += OnReset;
-
-			standart_appStarting = (string) Registry.GetValue(@"HKEY_CURRENT_USER\Control Panel\Cursors\", "AppStarting", "%SystemRoot%\\cursors\\aero_working.ani");
+		{standart_appStarting = (string) Registry.GetValue(@"HKEY_CURRENT_USER\Control Panel\Cursors\", "AppStarting", "%SystemRoot%\\cursors\\aero_working.ani");
 			standart_arrow = (string)Registry.GetValue(@"HKEY_CURRENT_USER\Control Panel\Cursors\", "Arrow", "%SystemRoot%\\cursors\\aero_arrow.cur");
 			standart_wait = (string)Registry.GetValue(@"HKEY_CURRENT_USER\Control Panel\Cursors\", "Wait", "%SystemRoot%\\cursors\\aero_busy.ani");
 
@@ -64,8 +44,6 @@ namespace LiveSplit.ChangeCursor
 
 		public override void Dispose()
 		{
-			m_state.OnStart -= OnStart;
-			m_state.OnReset -= OnReset;
 			Registry.SetValue(@"HKEY_CURRENT_USER\Control Panel\Cursors\", "AppStarting", standart_appStarting);
 			Registry.SetValue(@"HKEY_CURRENT_USER\Control Panel\Cursors\", "Arrow", standart_arrow);
 			Registry.SetValue(@"HKEY_CURRENT_USER\Control Panel\Cursors\", "Wait", standart_wait);
